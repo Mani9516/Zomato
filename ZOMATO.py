@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-import gradio as gr
+import streamlit as st
 import io
 
 # Load the data
@@ -13,7 +13,10 @@ def handleRate(value):
     if isinstance(value, str):
         value = value.split('/')
         value = value[0]
-    return float(value)
+    try:
+        return float(value)
+    except ValueError:
+        return np.nan
 
 dataframe["rate"] = dataframe["rate"].apply(handleRate)
 
@@ -47,7 +50,7 @@ def votes_by_type():
 
 def rating_distribution():
     plt.figure(figsize=(10, 6))
-    plt.hist(dataframe['rate'], bins=20)
+    plt.hist(dataframe['rate'].dropna(), bins=20)
     plt.title("Distribution of Ratings")
     plt.xlabel("Rating")
     plt.ylabel("Frequency")
@@ -95,28 +98,26 @@ def heatmap_type_online():
     plt.close()
     return buf
 
-# Gradio interface
-def zomato_analysis(analysis_type):
-    if analysis_type == "Restaurant Type Count":
-        return restaurant_type_count()
-    elif analysis_type == "Votes by Restaurant Type":
-        return votes_by_type()
-    elif analysis_type == "Rating Distribution":
-        return rating_distribution()
-    elif analysis_type == "Cost Distribution":
-        return cost_distribution()
-    elif analysis_type == "Online vs Offline Rating":
-        return online_vs_offline_rating()
-    elif analysis_type == "Heatmap: Type vs Online Order":
-        return heatmap_type_online()
+# Streamlit interface
+st.title("Zomato Restaurant Analysis")
+st.write("Select an analysis type to visualize Zomato restaurant data")
 
-iface = gr.Interface(
-    fn=zomato_analysis,
-    inputs=gr.Dropdown(["Restaurant Type Count", "Votes by Restaurant Type", "Rating Distribution", 
-                        "Cost Distribution", "Online vs Offline Rating", "Heatmap: Type vs Online Order"]),
-    outputs="image",
-    title="Zomato Restaurant Analysis",
-    description="Select an analysis type to visualize Zomato restaurant data"
+analysis_type = st.selectbox(
+    "Select Analysis Type",
+    ["Restaurant Type Count", "Votes by Restaurant Type", "Rating Distribution", 
+     "Cost Distribution", "Online vs Offline Rating", "Heatmap: Type vs Online Order"]
 )
 
-iface.launch()
+# Render the selected analysis
+if analysis_type == "Restaurant Type Count":
+    st.image(restaurant_type_count(), use_column_width=True)
+elif analysis_type == "Votes by Restaurant Type":
+    st.image(votes_by_type(), use_column_width=True)
+elif analysis_type == "Rating Distribution":
+    st.image(rating_distribution(), use_column_width=True)
+elif analysis_type == "Cost Distribution":
+    st.image(cost_distribution(), use_column_width=True)
+elif analysis_type == "Online vs Offline Rating":
+    st.image(online_vs_offline_rating(), use_column_width=True)
+elif analysis_type == "Heatmap: Type vs Online Order":
+    st.image(heatmap_type_online(), use_column_width=True)
