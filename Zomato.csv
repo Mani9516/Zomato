@@ -1,0 +1,16 @@
+name,online_order,book_table,rate,votes,approx_cost(for two people),listed_in(type)
+Onesta,Yes,Yes,4.6/5,2556,600,Cafes
+Empire Restaurant,Yes,No,4.4/5,4884,750,Dining
+Meghana Foods,Yes,No,4.4/5,4401,600,Dining
+Corner House Ice Cream,No,No,4.3/5,345,400,Dining
+Szechuan Dragon,Yes,No,4.2/5,1647,600,Dining
+Kabab Magic,Yes,No,4.1/5,1720,400,Dining
+Jalsa,Yes,Yes,4.1/5,775,800,Buffet
+Spice Elephant,Yes,No,4.1/5,787,800,Buffet
+Recipe,Yes,No,4.0/5,804,450,Dining
+Penthouse Cafe,Yes,No,4.0/5,324,700,other
+Caf-Eleven,No,No,4.0/5,424,450,Cafes
+McDonald's,Yes,No,3.9/5,286,500,Dining
+Domino's Pizza,Yes,No,3.9/5,540,800,Dining
+Addhuri Udupi Bhojana,No,No,3.7/5,88,300,Buffet
+LSD Cafe,No,No,2.9/5,84,700,other
